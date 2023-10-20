@@ -15,8 +15,11 @@ import AvatarProfile from '../images/avatarprofile.jpg'
 const Sidebar = () => {
   
   return (
-    <Box sx={{position:"sticky",top:0,}}>
-      <Box sx={{padding:"1px 15px",position:"sticky",top:0,mt:2, mb:2,display:"flex",'&:hover': {
+    <Box sx={{position:"sticky",top:0,overflow:"hidden",height:500,width:250,mt:6,'&:hover':{
+      overflowY:"scroll"
+
+    }}}>
+      <Box sx={{padding:"1px 15px",top:0,mt:2, mb:2,display:"flex",'&:hover': {
       backgroundColor:"rgb(211 211 211/31%)",
     
      cursor: 'pointer',

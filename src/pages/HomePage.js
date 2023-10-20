@@ -8,12 +8,12 @@ import Sidebar from './Sidebar/Sidebar'
 
 const HomePage = () => {
   return (
-    <Box sx={{display:"flex"}}>
+    <Box sx={{display:"flex",backgroundColor:"whitesmoke"}}>
       <Box>
     <Sidebar />
 
         </Box>
-    <Box sx={{flex:1,padding:"30px 150px",display:"flex",flexDirection:"column",maxWidth:"600px",mt:"50px"}}>
+    <Box sx={{flex:1,padding:"30px 60px",display:"flex",flexDirection:"column",maxWidth:"600px",mt:"50px"}}>
       <StoryReel />
       <CreatePost />
       <Post />

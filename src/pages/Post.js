@@ -9,7 +9,7 @@ const Post = () => {
             <Box>
   
             </Box>
-            <MoreHorizRounded />
+            {/* <MoreHorizRounded /> */}
         </Box>
       
     </Box>

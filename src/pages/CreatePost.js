@@ -157,7 +157,7 @@ export default function CreatePost() {
       sx={{
         display: "flex",
         backgroundColor: "#fff",
-        width: "100%",
+        width: 550,
         p: "15px",
         borderRadius: "10px",
         mt: "30px",
