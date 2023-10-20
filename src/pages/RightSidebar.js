@@ -6,12 +6,12 @@ import { Search } from '@mui/icons-material'
 const RightSidebar = () => {
   const contacts = useData()
   return (
-    <>
-    <Box sx={{display:"flex",justifyContent:"space-between",mt:10,}}>
+    <Box sx={{position:"fixed",top:90,right:5}}>
+    <Box sx={{display:"flex",justifyContent:"space-between",}}>
     <Typography sx={{fontSize:"16px",color:"gray",fontWeight:"bold"}}>Contacts</Typography>
       <Search sx={{color:"gray"}} />
       </Box>
-    <Box sx={{height:"100vh",top:0,overflow:"hidden",'&:hover':{
+    <Box sx={{height:450,top:0,overflow:"hidden",'&:hover':{
       overflowY:"scroll"
     }}}>
       
@@ -46,7 +46,7 @@ const RightSidebar = () => {
 }
 
     </Box >
-    </>
+    </Box>
   )
 }
 

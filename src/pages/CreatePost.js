@@ -13,16 +13,35 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import AvatarProfile from './images/avatarprofile.jpg'
 import { styled } from '@mui/material/styles';
+import { useData } from "./DataContext";
 
 
 function ConfirmationDialogRaw(props) {
   const [image, setImage] = useState(null);
   const [text,setText]=useState(" ")
-
+  
   const { onClose, value: valueProp, open, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef(null);
 
+  const post=useData()
+
+  const handleChange = () => {
+    if (value.trim() !== '') {
+      const newPost = {
+        id: Date.now(),
+        author: 'You',
+        time: new Date().toLocaleString(),
+        content: text,
+        image: image,
+        likes: 0,
+        bookmarks: 0,
+      };
+      post.addNewPost(newPost);
+      setText('');
+      setImage(null);
+    }
+  };
   function handleImage(e){
     console.log(e,"oiuygtfrds e image")
     setImage(e.target.files[0])
@@ -52,9 +71,9 @@ function ConfirmationDialogRaw(props) {
     console.log(image,text)
   };
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setValue(event.target.value);
+  // };
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -111,7 +130,7 @@ function ConfirmationDialogRaw(props) {
       </DialogContent>
       <DialogActions>
         <Box>
-        <Button onClick={handleOk}>Post</Button>
+        <Button onClick={handleChange}>Post</Button>
         </Box>
       </DialogActions>
      
@@ -161,6 +180,7 @@ export default function CreatePost() {
         p: "15px",
         borderRadius: "10px",
         mt: "30px",
+    
         boxShadow: "4px 2px 10px #ccc",
         flexDirection: "column",
         boxSizing: "border-box",
