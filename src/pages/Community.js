@@ -1,10 +1,12 @@
+import { Box } from '@mui/material'
+import { Typography } from 'antd'
 import React from 'react'
 
 const Community = () => {
   return (
-    <div>
-      <p>Community</p>
-    </div>
+    <Box>
+      <Typography>Community</Typography>
+    </Box>
   )
 }
 

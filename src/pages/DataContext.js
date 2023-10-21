@@ -125,7 +125,7 @@ export const DataProvider = ({ children }) => {
           // image: 'https://img.freepik.com/free-photo/front-view-young-businesswoman-using-her-smartphone-during-meeting_23-2148824890.jpg?size=626&ext=jpg&ga=GA1.1.1413502914.1696809600&semt=ais',
 
           liked: false,
-          showReactions: false,
+          
         },
         {
           id: 2,
@@ -137,7 +137,7 @@ export const DataProvider = ({ children }) => {
           liked: false,
           // image: 'https://i.pinimg.com/736x/ca/8f/ca/ca8fca670f3cb98f7ae207a142024cbb.jpg',
 
-          showReactions: false,
+          
         },
         {
           id: 2,
@@ -149,7 +149,7 @@ export const DataProvider = ({ children }) => {
           // image: 'https://img.freepik.com/free-photo/smiling-businessman-sitting-by-table-cafe-with-laptop-computer-while-reading-newspaper_171337-5553.jpg',
 
           liked: false,
-          showReactions: false,
+          
         },
         {
           id: 2,
@@ -161,7 +161,7 @@ export const DataProvider = ({ children }) => {
           liked: false,
           // image: 'https://i.pinimg.com/736x/ca/8f/ca/ca8fca670f3cb98f7ae207a142024cbb.jpg',
 
-          showReactions: false,
+          
         },
         {
           id: 2,
@@ -173,7 +173,7 @@ export const DataProvider = ({ children }) => {
           // image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICYD8aHvjzH53acwNw-jXLVavhPp8kc9Gquf1_uNKuFIxXRkcmoBZFzyxudF6DVAzWEg&usqp=CAU',
 
           liked: false,
-          showReactions: false,
+          
         },
       ]);
     
@@ -181,9 +181,9 @@ export const DataProvider = ({ children }) => {
         const updatedPosts = posts.map((post) => {
           if (post.id === postId) {
             if (post.liked) {
-              return { ...post, liked: false, likes: post.likes - 1, showReactions: false };
+              return { ...post, liked: false, likes: post.likes - 1,  };
             } else {
-              return { ...post, liked: true, likes: post.likes + 1, showReactions: true };
+              return { ...post, liked: true, likes: post.likes + 1, };
             }
           }
           return post;
@@ -199,7 +199,7 @@ export const DataProvider = ({ children }) => {
       const handleShare = (postId) => {
         const updatedPosts = posts.map((post) => {
           if (post.id === postId) {
-            console.log(`Post with ID ${postId} is being shared.`);
+            console.log(`post ${postId} is shared.`);
           }
           return post;
         });

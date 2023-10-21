@@ -95,9 +95,7 @@ function ConfirmationDialogRaw(props) {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <DialogTitle>Create Post</DialogTitle>
-        {/* {
-          image && {image}
-        } */}
+     
         
                 
              

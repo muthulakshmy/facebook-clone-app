@@ -39,7 +39,7 @@ const HomePage = () => {
           <Box key={post.id} sx={{mb:2,width: 550, mt: 2, borderRadius: 3}}>
             <Card>
               <CardHeader
-                avatar={<Avatar src={post.avatar} alt="Avatar" />}
+                avatar={<Avatar src={post.avatar} sx={{border:"2px solid #17A9FD"}} alt="Avatar" />}
                 title={post.name}
                 subheader={post.time}
                 action={
@@ -61,6 +61,7 @@ const HomePage = () => {
                   />
                 )}
               </CardContent>
+              <Divider />
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <IconButton onClick={() => handleLike(post.id)}>
