@@ -4,33 +4,32 @@ import {
   VideoCallRounded,
 } from "@mui/icons-material";
 import { Box, Avatar, TextField, Typography, IconButton } from "@mui/material";
-import  React, { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
-import AvatarProfile from './images/avatarprofile.jpg'
-import { styled } from '@mui/material/styles';
+import AvatarProfile from "./images/avatarprofile.jpg";
+import { styled } from "@mui/material/styles";
 import { useData } from "./DataContext";
-
 
 function ConfirmationDialogRaw(props) {
   const [image, setImage] = useState(null);
-  const [text,setText]=useState(" ")
-  
+  const [text, setText] = useState(" ");
+
   const { onClose, value: valueProp, open, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef(null);
 
-  const post=useData()
+  const post = useData();
 
   const handleChange = () => {
-    if (value.trim() !== '') {
+    if (value.trim() !== "") {
       const newPost = {
         id: Date.now(),
-        author: 'You',
+        author: "You",
         time: new Date().toLocaleString(),
         content: text,
         image: image,
@@ -38,17 +37,16 @@ function ConfirmationDialogRaw(props) {
         bookmarks: 0,
       };
       post.addNewPost(newPost);
-      setText('');
+      setText("");
       setImage(null);
     }
   };
-  function handleImage(e){
-    console.log(e,"oiuygtfrds e image")
-    setImage(e.target.files[0])
-     
-    console.log(image,"chacahacaga")
+  function handleImage(e) {
+    console.log(e, "oiuygtfrds e image");
+    setImage(e.target.files[0]);
+
+    console.log(image, "chacahacaga");
   }
-  
 
   React.useEffect(() => {
     if (!open) {
@@ -68,21 +66,18 @@ function ConfirmationDialogRaw(props) {
 
   const handleOk = () => {
     onClose(value);
-    console.log(image,text)
+    console.log(image, text);
   };
 
-  // const handleChange = (event) => {
-  //   setValue(event.target.value);
-  // };
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
     height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
+    overflow: "hidden",
+    position: "absolute",
     bottom: 0,
     left: 0,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     width: 1,
   });
   return (
@@ -95,43 +90,45 @@ function ConfirmationDialogRaw(props) {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <DialogTitle>Create Post</DialogTitle>
-     
-        
-                
-             
         <Button autoFocus onClick={handleCancel}>
           X
         </Button>
       </Box>
-
       <DialogContent>
-        <Box sx={{display:"flex"}}>
-      <Avatar alt="Zayn M" src={AvatarProfile} sx={{height:30,width:30,mr:1,mb:1}} />
-         
-        <Typography >Zayn M</Typography>
+        <Box sx={{ display: "flex" }}>
+          <Avatar
+            alt="Zayn M"
+            src={AvatarProfile}
+            sx={{ height: 30, width: 30, mr: 1, mb: 1 }}
+          />
+          <Typography>Zayn M</Typography>
         </Box>
-     
+        <TextField
+          placeholder="What's on your mind, Zayn M ?"
+          sx={{ width: "400px" }}
+          onChange={(e) => setText(e.target.value)}
+        ></TextField>
+        <Box sx={{ display: "flex", mt: 1, justifyContent: "space-between" }}>
+          <Typography>Add to your story</Typography>
 
-        <TextField placeholder="What's on your mind, Zayn M ?" sx={{width:"400px"}} onChange={(e)=>setText(e.target.value)}></TextField>
-        <Box sx={{display:"flex",mt:1,justifyContent:"space-between"}}>
-        <Typography >Add to your story</Typography>
-       
-    
-       
-        <Button component="label" variant="text"  startIcon={<PhotoLibraryRounded sx={{color:"lightgreen"}} />}>
-   
-     <VisuallyHiddenInput type="file" onChange={handleImage}
-        accept="image/*" />
-    </Button>
-   
-      </Box>
+          <Button
+            component="label"
+            variant="text"
+            startIcon={<PhotoLibraryRounded sx={{ color: "lightgreen" }} />}
+          >
+            <VisuallyHiddenInput
+              type="file"
+              onChange={handleImage}
+              accept="image/*"
+            />
+          </Button>
+        </Box>
       </DialogContent>
       <DialogActions>
         <Box>
-        <Button onClick={handleChange}>Post</Button>
+          <Button onClick={handleChange}>Post</Button>
         </Box>
       </DialogActions>
-     
     </Dialog>
   );
 }
@@ -152,11 +149,11 @@ export default function CreatePost() {
 
   const handleClose = (newValue) => {
     setOpen(false);
-
     if (newValue) {
       setValue(newValue);
     }
   };
+
   const callStyle = {
     display: "flex",
     alignItems: "center",
@@ -167,6 +164,7 @@ export default function CreatePost() {
       backgroundColor: "whitesmoke",
     },
   };
+
   const callNameStyle = { ml: "10px", fontSize: "12px" };
 
   return (
@@ -178,7 +176,7 @@ export default function CreatePost() {
         p: "15px",
         borderRadius: "10px",
         mt: "30px",
-    
+
         boxShadow: "4px 2px 10px #ccc",
         flexDirection: "column",
         boxSizing: "border-box",
