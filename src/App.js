@@ -1,43 +1,43 @@
-import { Box, Typography } from "@mui/material";
 import "./App.css";
-import Header from "./pages/Header";
-import CreatePost from "./pages/CreatePost";
 import { useState } from "react";
-import HomePage from "./pages/HomePage";
-import AddFriends from "./pages/AddFriends";
-import Community from "./pages/Community";
-import Sidebar from "./pages/Sidebar/Sidebar";
-import RightSidebar from "./pages/RightSidebar";
-import Marketplace from "./pages/Marketplace";
 import { DataProvider } from "./pages/DataContext";
-import { BrowserRouter as Router , Link, Routes, Route } from 'react-router-dom'
-
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import RequireAuth from "./RequireAuth";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Error from "./Error";
+import Home from "./Home";
+import Profilepage from "./pages/Components/Profilepage";
+import Feed from "./pages/Components/Feed";
+import Saved from "./pages/Components/Saved";
+import ProfileFriends from "./pages/Components/ProfileFriends"
+import AddFriends from "./pages/AddFriends";
 function App() {
-  const [tabValue, setTabValue] = useState(0);
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+  
   return (
     <DataProvider>
-<Box>
-      <Header
-        tabValue={tabValue}
-        setTabValue={setTabValue}
-        handleTabChange={handleTabChange}
-      />
-
-      <Box sx={{ overflowX: "hidden", overflowY: "hidden" }}>
-        <Box>
-          {tabValue === 0 && <HomePage />}
-          {tabValue === 1 && <AddFriends />}
-          {tabValue === 2 && <Community />}
-          {tabValue === 3 && <Marketplace />}
-        </Box>
-      </Box>
-    </Box>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/*" element={<Error />} />
+          <Route path="/profile" element={<Profilepage />} />
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/saved" element={<Saved />} />
+          <Route path ="/friendList" element={<ProfileFriends />} />
+          {/* <Route path="friendRequest" elemet={<AddFriends />} /> */}
+          <Route
+            path="/home"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </Router>
     </DataProvider>
-    
   );
 }
 

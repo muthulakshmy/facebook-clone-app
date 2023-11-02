@@ -3,7 +3,7 @@ import {
   PhotoLibraryRounded,
   VideoCallRounded,
 } from "@mui/icons-material";
-import { Box, Avatar, TextField, Typography, IconButton } from "@mui/material";
+import { Box, Avatar, TextField, Typography,Card } from "@mui/material";
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
@@ -11,41 +11,48 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
-import AvatarProfile from "./images/avatarprofile.jpg";
 import { styled } from "@mui/material/styles";
 import { useData } from "./DataContext";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 function ConfirmationDialogRaw(props) {
   const [image, setImage] = useState(null);
   const [text, setText] = useState(" ");
+  const dataContext = useData();
 
   const { onClose, value: valueProp, open, ...other } = props;
   const [value, setValue] = useState(valueProp);
   const radioGroupRef = useRef(null);
 
   const post = useData();
-
+  const d=post.posts.filter((v)=>v.name===post.logName)
+const d1= d.length > 0 ? d[0].avatar :post.logName
   const handleChange = () => {
     if (value.trim() !== "") {
       const newPost = {
-        id: Date.now(),
-        author: "You",
-        time: new Date().toLocaleString(),
+        id: new Date(),
+        name: post.logName,
+        time:  new Date().toISOString(),
         content: text,
         image: image,
+        avatar: d1,
         likes: 0,
         bookmarks: 0,
       };
       post.addNewPost(newPost);
       setText("");
       setImage(null);
+      console.log(newPost);
     }
+    onClose();
   };
   function handleImage(e) {
-    console.log(e, "oiuygtfrds e image");
-    setImage(e.target.files[0]);
+    // console.log(e, "oiuygtfrds e image");
+    const img = e.target.files[0];
+    setImage(URL.createObjectURL(img));
 
-    console.log(image, "chacahacaga");
+    // console.log(image, "chacahacaga");/
   }
 
   React.useEffect(() => {
@@ -80,6 +87,34 @@ function ConfirmationDialogRaw(props) {
     whiteSpace: "nowrap",
     width: 1,
   });
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = "#";
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(" ")[0][0]}`,
+    };
+  }
   return (
     <Dialog
       sx={{ "& .MuiDialog-paper": { width: "80%", maxHeight: 435 } }}
@@ -96,15 +131,23 @@ function ConfirmationDialogRaw(props) {
       </Box>
       <DialogContent>
         <Box sx={{ display: "flex" }}>
-          <Avatar
-            alt="Zayn M"
-            src={AvatarProfile}
-            sx={{ height: 30, width: 30, mr: 1, mb: 1 }}
-          />
-          <Typography>Zayn M</Typography>
+       
+{
+          d.length > 0 ? (  <Avatar
+            alt={dataContext.logName}
+            src={d[0].avatar}
+            sx={{ height: 40, width: 40, mr: 1, mb: 1 }}
+          />):(<Avatar
+            alt={dataContext.logName}
+            // src={d[0].avatar}
+            {...stringAvatar(`${dataContext.logName}`)}
+            sx={{ height: 40, width: 40 , mr: 1, mb: 1}}
+          />)
+        }
+          <Typography sx={{ mt: 1 }}>{post.logName}</Typography>
         </Box>
         <TextField
-          placeholder="What's on your mind, Zayn M ?"
+          placeholder="What's on your mind,`${}`  ?"
           sx={{ width: "400px" }}
           onChange={(e) => setText(e.target.value)}
         ></TextField>
@@ -146,6 +189,7 @@ export default function CreatePost() {
   const handleClickListItem = () => {
     setOpen(true);
   };
+  const dataContext = useData();
 
   const handleClose = (newValue) => {
     setOpen(false);
@@ -153,7 +197,36 @@ export default function CreatePost() {
       setValue(newValue);
     }
   };
+  const d=dataContext.posts.filter((v)=>v.name==dataContext.logName)
 
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = "#";
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(" ")[0][0]}`,
+    };
+  }
   const callStyle = {
     display: "flex",
     alignItems: "center",
@@ -168,25 +241,41 @@ export default function CreatePost() {
   const callNameStyle = { ml: "10px", fontSize: "12px" };
 
   return (
-    <Box
+    <Card
       sx={{
         display: "flex",
-        backgroundColor: "#fff",
         width: 550,
         p: "15px",
         borderRadius: "10px",
         mt: "30px",
-
-        boxShadow: "4px 2px 10px #ccc",
+        boxShadow: "1px 1px 2px  #ccc",
         flexDirection: "column",
         boxSizing: "border-box",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-        <Avatar />
+        {
+          d.length > 0 ? (  <Avatar
+            alt={dataContext.logName}
+            src={d[0].avatar}
+            sx={{ height: 40, width: 40 }}
+          />):(<Avatar
+            alt={dataContext.logName}
+            // src={d[0].avatar}
+            {...stringAvatar(`${dataContext.logName}`)}
+            sx={{ height: 40, width: 40 }}
+          />)
+        }
+        {/* <Avatar
+          alt={dataContext.logName}
+          src={d[0].avatar}
+          // {...stringAvatar(`${dataContext.logName}`)}
+          sx={{ height: 40, width: 40 }}
+        /> */}
+
         <Box
           sx={{
-            backgroundColor: "white",
+            // backgroundColor: "white",
             p: "1px",
             borderRadius: "20px",
             ml: "10px",
@@ -194,9 +283,9 @@ export default function CreatePost() {
           }}
         >
           <TextField
-            placeholder="what's on your mind Zayn M "
+            placeholder="whats on your mind"
             sx={{
-              backgroundColor: "whitesmoke",
+              // backgroundColor: "whitesmoke",
               borderRadius: "200px",
               textDecoration: "none",
               width: "450px",
@@ -215,20 +304,20 @@ export default function CreatePost() {
           mt: "15px",
         }}
       >
-        <Box sx={callStyle}>
+        <Box sx={callStyle} onClick={handleClickListItem}>
           <VideoCallRounded sx={{ color: "red" }} fontSize="large" />
           <Typography sx={callNameStyle}>Live Video</Typography>
         </Box>
-        <Box sx={callStyle}>
+        <Box sx={callStyle} onClick={handleClickListItem}>
           <PhotoLibraryRounded sx={{ color: "lightgreen" }} fontSize="large" />
           <Typography sx={callNameStyle}>Photo/Video</Typography>
         </Box>
-        <Box sx={callStyle}>
+        <Box sx={callStyle} onClick={handleClickListItem}>
           <InsertEmoticonOutlined sx={{ color: "#ffb100" }} fontSize="large" />
           <Typography sx={callNameStyle}>Feeling/Activity</Typography>
         </Box>
       </Box>
       <ConfirmationDialogRaw open={open} onClose={handleClose} value={value} />
-    </Box>
+    </Card>
   );
 }

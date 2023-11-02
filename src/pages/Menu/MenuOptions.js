@@ -1,8 +1,30 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, CardMedia } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-export default function MenuOptions({ src, title,description }) {
+export default function MenuOptions({ src, title,description,setTabValue }) {
+  const navigate=useNavigate()
+  function handleClick() {
+    if (title === "Friends") {
+      navigate("/friendList")
+    } else if (title === "Groups") {
+      setTabValue(2);
+    } else if (title === "Marketplace") {
+      setTabValue(3);
+    }else if(title==="Feeds"){
+      navigate("/feed")
+    }else if(title==="Video"){
+      navigate("/feed")
+    }else if(title==="Memories"){
+      navigate("/feed")
+    }
+    else if(title==="Events"){
+      navigate("/feed")
+    }else if(title==="Saved"){
+      navigate("/saved")
+    }
+  }
   return (
     <div>
       <Box
@@ -17,6 +39,7 @@ export default function MenuOptions({ src, title,description }) {
            cursor: 'pointer',
           },
         }}
+        onClick={handleClick}
       >
         <Box>
         <CardMedia component="img" image={src} sx={{ height: 25, width: 25 }} />

@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   CardMedia,
+  ClickAwayListener,
   IconButton,
   Tab,
   Tabs,
@@ -13,7 +14,6 @@ import React, { useState } from "react";
 import Facebooklogo from "./images/facebook.svg";
 import MessageIcon from "./images/chat.png";
 import NotificationIcon from "./images/bell-ring.png";
-import AvatarProfile from "./images/avatarprofile.jpg";
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import {
   Search,
@@ -24,6 +24,10 @@ import {
 } from "@mui/icons-material";
 import Menu from "./Menu/Menu";
 import SearchPost from "./Search";
+import MyProfile from "./Components/Profile";
+import Messages from "./Components/Messages";
+import Notifications from "./Components/Notifications";
+import { useData } from "./DataContext";
 const homeBoxStyle = {
   p: "5px 40px",
   cursor: "pointer",
@@ -37,8 +41,31 @@ const homeBoxStyle = {
 
 const avatarBoxStyle = { p: "2px 5px", cursor: "pointer" };
 
-const Header = ({ tabValue, setTabValue, handleTabChange }) => {
+const Header = ({ theme,colorMode }) => {
+  const {tabValue, setTabValue, handleTabChange}=useData()
+  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [opened, setOpened] = React.useState(false);
+  const [anchorEle, setAnchorEle] = React.useState(null);
+ const handleClickAwayProfile =()=>{
+ 
+  setAnchorEl(false);
+ }
+ const handleClickAwayMenu =()=>{
+  setOpen(false);
+
+ }
+ const handleClickAwayNotifications =()=>{
+  setAnchorEle(false);
+
+ }
+ const handleClickAwayMenuMessages =()=>{
+  setOpened(false);
+
+ }
   return (
+
+ 
     <Box
       sx={{
         display: "flex",
@@ -57,10 +84,10 @@ const Header = ({ tabValue, setTabValue, handleTabChange }) => {
         <CardMedia
           component="img"
           image={Facebooklogo}
-          sx={{ height: 30, width: 30, mr: 1, ml: 1 }}
+          sx={{ height: 35, width: 35, mr: 1, ml: 1 }}
           alt="Group logo"
         />
-       <SearchPost />
+        <SearchPost />
       </Box>
 
       <Box
@@ -81,48 +108,39 @@ const Header = ({ tabValue, setTabValue, handleTabChange }) => {
           </Tooltip>
         </Tabs>
       </Box>
-
       <Box
         sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
-        <Box sx={avatarBoxStyle}>
-          <Menu />
-        </Box>
-        <Box sx={avatarBoxStyle}>
-          <IconButton>
-            <Tooltip title="Messenger">
-              <CardMedia
-                component="img"
-                image={MessageIcon}
-                sx={{ height: 20, width: 20 }}
-                alt="Message logo"
-              />
-            </Tooltip>
-          </IconButton>
-        </Box>
-        <Box sx={avatarBoxStyle}>
-          <IconButton>
-            <Tooltip title="Notifications">
-              <CardMedia
-                component="img"
-                image={NotificationIcon}
-                sx={{ height: 20, width: 20 }}
-                alt="facebook logo"
-              />
-            </Tooltip>
-          </IconButton>
-        </Box>
+      <ClickAwayListener onClickAway={handleClickAwayMenu}>
 
         <Box sx={avatarBoxStyle}>
-          <Tooltip title="Profile">
-            <Avatar
-              alt="Zayn M"
-              src={AvatarProfile}
-              sx={{ height: 30, width: 30 }}
-            />
-          </Tooltip>
+          <Menu open={open} setOpen={setOpen} setTabValue={setTabValue} />
         </Box>
+    </ClickAwayListener>
+    <ClickAwayListener onClickAway={handleClickAwayMenuMessages}>
+
+        <Box sx={avatarBoxStyle}>
+         
+          <Messages open={opened} setOpen={setOpened} />
+        </Box>
+        </ClickAwayListener>
+
+        <ClickAwayListener onClickAway={handleClickAwayNotifications}>
+        <Box sx={avatarBoxStyle}>
+        
+           
+            <Notifications open={anchorEle} setOpen={setAnchorEle} />
+        
+        </Box>
+        </ClickAwayListener>
+        <ClickAwayListener onClickAway={handleClickAwayProfile}>
+
+        <Box sx={avatarBoxStyle}>
+          <MyProfile anchorEl={anchorEl} setAnchorEl={setAnchorEl} theme={theme} colorMode={colorMode}  />
+        </Box>
+        </ClickAwayListener>
       </Box>
+
     </Box>
   );
 };
