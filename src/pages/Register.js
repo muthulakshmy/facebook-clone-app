@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Button, Card, Divider, Snackbar, TextField, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
-// import { useAuth } from "../auth";
 import PasswordInput from "./PasswordInput";
 import UsernameInput from "./UsernameInput";
 import { useData } from "./DataContext";
@@ -59,7 +58,7 @@ const Register = () => {
     <Card
     sx={{
       width: 300,
-      height: 420,
+      // height: auto,
       mx: 50,
       my: 5,
       p:1,
@@ -83,7 +82,6 @@ const Register = () => {
         sx={{ mb: 2 }}
         onChange={handleUsername}
         value={username}
-        // setUserName={setUserName}
         onBlur={(e, error) => {
           setErrors((state) => ({ ...state, pwd: error }));
         }}
@@ -93,8 +91,6 @@ const Register = () => {
       <PasswordInput
         value={password}
         onChange={handlePassword}
-        // setPassword={setPassword}
-        // onChange={(e) => {setPassword(e.target.value)}}
         onBlur={(e, error) => {
           setErrors((state) => ({ ...state, pwd: error }));
         }}

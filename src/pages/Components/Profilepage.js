@@ -1,14 +1,11 @@
 import { Avatar, Box, Tab, Tabs, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useData } from "../DataContext";
-import Header from "../Header";
-import AddFriends from "../AddFriends";
 import Community from "../Community";
 import Marketplace from "../Marketplace";
 import Postprofile from "./Postprofile";
 import { useNavigate } from "react-router-dom";
 import Likes from "./Likes";
-import HomePage from "../HomePage";
 import ProfileHeader from "./ProfileHeader";
 import ProfileFriends from './ProfileFriends'
 const homeBoxStyle = {

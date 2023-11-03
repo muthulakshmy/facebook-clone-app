@@ -3,7 +3,7 @@ import {
   PhotoLibraryRounded,
   VideoCallRounded,
 } from "@mui/icons-material";
-import { Box, Avatar, TextField, Typography,Card } from "@mui/material";
+import { Box, Avatar, TextField, Typography, Card, CardMedia } from "@mui/material";
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
@@ -13,8 +13,6 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import { styled } from "@mui/material/styles";
 import { useData } from "./DataContext";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
 
 function ConfirmationDialogRaw(props) {
   const [image, setImage] = useState(null);
@@ -26,14 +24,14 @@ function ConfirmationDialogRaw(props) {
   const radioGroupRef = useRef(null);
 
   const post = useData();
-  const d=post.posts.filter((v)=>v.name===post.logName)
-const d1= d.length > 0 ? d[0].avatar :post.logName
+  const d = post.posts.filter((v) => v.name === post.logName);
+  const d1 = d.length > 0 ? d[0].avatar : post.logName;
   const handleChange = () => {
     if (value.trim() !== "") {
       const newPost = {
         id: new Date(),
         name: post.logName,
-        time:  new Date().toISOString(),
+        time: new Date().toISOString(),
         content: text,
         image: image,
         avatar: d1,
@@ -48,11 +46,8 @@ const d1= d.length > 0 ? d[0].avatar :post.logName
     onClose();
   };
   function handleImage(e) {
-    // console.log(e, "oiuygtfrds e image");
     const img = e.target.files[0];
     setImage(URL.createObjectURL(img));
-
-    // console.log(image, "chacahacaga");/
   }
 
   React.useEffect(() => {
@@ -115,6 +110,9 @@ const d1= d.length > 0 ? d[0].avatar :post.logName
       children: `${name.split(" ")[0][0]}`,
     };
   }
+
+  const handleX=()=>{
+  }
   return (
     <Dialog
       sx={{ "& .MuiDialog-paper": { width: "80%", maxHeight: 435 } }}
@@ -131,26 +129,34 @@ const d1= d.length > 0 ? d[0].avatar :post.logName
       </Box>
       <DialogContent>
         <Box sx={{ display: "flex" }}>
-       
-{
-          d.length > 0 ? (  <Avatar
-            alt={dataContext.logName}
-            src={d[0].avatar}
-            sx={{ height: 40, width: 40, mr: 1, mb: 1 }}
-          />):(<Avatar
-            alt={dataContext.logName}
-            // src={d[0].avatar}
-            {...stringAvatar(`${dataContext.logName}`)}
-            sx={{ height: 40, width: 40 , mr: 1, mb: 1}}
-          />)
-        }
+          {d.length > 0 ? (
+            <Avatar
+              alt={dataContext.logName}
+              src={d[0].avatar}
+              sx={{ height: 40, width: 40, mr: 1, mb: 1 }}
+            />
+          ) : (
+            <Avatar
+              alt={dataContext.logName}
+              {...stringAvatar(`${dataContext.logName}`)}
+              sx={{ height: 40, width: 40, mr: 1, mb: 1 }}
+            />
+          )}
           <Typography sx={{ mt: 1 }}>{post.logName}</Typography>
         </Box>
         <TextField
-          placeholder="What's on your mind,`${}`  ?"
-          sx={{ width: "400px" }}
+         placeholder= {`What's on your mind, ${dataContext.logName} ?`}
+          sx={{ width: "400px",mb:1 }}
           onChange={(e) => setText(e.target.value)}
         ></TextField>
+        {/* <Button onClick={handleX}>X</Button> */}
+          {image   &&     <CardMedia 
+         component="img"
+         image={image}
+        alt="loading"
+
+        />}
+        
         <Box sx={{ display: "flex", mt: 1, justifyContent: "space-between" }}>
           <Typography>Add to your story</Typography>
 
@@ -166,6 +172,7 @@ const d1= d.length > 0 ? d[0].avatar :post.logName
             />
           </Button>
         </Box>
+      
       </DialogContent>
       <DialogActions>
         <Box>
@@ -197,7 +204,7 @@ export default function CreatePost() {
       setValue(newValue);
     }
   };
-  const d=dataContext.posts.filter((v)=>v.name==dataContext.logName)
+  const d = dataContext.posts.filter((v) => v.name == dataContext.logName);
 
   function stringToColor(string) {
     let hash = 0;
@@ -254,28 +261,21 @@ export default function CreatePost() {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
-        {
-          d.length > 0 ? (  <Avatar
+        {d.length > 0 ? (
+          <Avatar
             alt={dataContext.logName}
             src={d[0].avatar}
             sx={{ height: 40, width: 40 }}
-          />):(<Avatar
+          />
+        ) : (
+          <Avatar
             alt={dataContext.logName}
-            // src={d[0].avatar}
             {...stringAvatar(`${dataContext.logName}`)}
             sx={{ height: 40, width: 40 }}
-          />)
-        }
-        {/* <Avatar
-          alt={dataContext.logName}
-          src={d[0].avatar}
-          // {...stringAvatar(`${dataContext.logName}`)}
-          sx={{ height: 40, width: 40 }}
-        /> */}
-
+          />
+        )}
         <Box
           sx={{
-            // backgroundColor: "white",
             p: "1px",
             borderRadius: "20px",
             ml: "10px",
@@ -283,9 +283,9 @@ export default function CreatePost() {
           }}
         >
           <TextField
-            placeholder="whats on your mind"
+            placeholder= {`What's on your mind, ${dataContext.logName} ?`}
+
             sx={{
-              // backgroundColor: "whitesmoke",
               borderRadius: "200px",
               textDecoration: "none",
               width: "450px",

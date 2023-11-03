@@ -49,7 +49,6 @@ const Post = () => {
     console.log(post, "dfykutjh");
   }
   return (
-    // <ClickAwayListener onClickAway={handleClickAway}>
     <Box>
       {posts &&
         posts.map((post, index) => {
@@ -128,7 +127,6 @@ const Post = () => {
           );
         })}
     </Box>
-    // </ClickAwayListener>
   );
 };
 
